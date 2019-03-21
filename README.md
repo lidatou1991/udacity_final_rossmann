@@ -5,6 +5,31 @@ graduation project for Udacity machine learning engineer nanodegree
 - https://www.kaggle.com/c/rossmann-store-sales  
 
 # 使用的库  
+- 数据处理：Pandas，Numpy
+- 特征工程：Featuretools
+- 算法包装：sk-learn
+- 自动化 Pipeline: TPOT
+
+# file description
+
+- /GCP：.ipynb 表示在谷歌云上运行的 notebook；.csv 表示对应模型的结果
+- 其余 .ipynb 则是运行在本地 MBP
+
+
 # 机器硬件及系统  
+本地： 2017 MBP 8G
+谷歌云： 30 GB RAM
+
 # 运行时间
+
+- TPOT 优化模型时间：在对应 notebook 中的 max_mins 参数中（e.g 120= 2h)
+- 本地运行 GradientDescentBoost，＜20 min
+
+# 得分以排名
+
+- 现在得分最高为 pulic score = 0.146, 对应 notebook ：https://github.com/lidatou1991/udacity_final_rossmann/blob/master/%08Auto-Feature-MBP.ipynb
+
+- 增加 feature 后，得分 1.2 非常疑惑， 对应 notebook ：https://github.com/lidatou1991/udacity_final_rossmann/blob/master/GCP/XG-TPOT-GCP-2h-test-Add-Feature.ipynb
+
+# 疑惑与问题
 
