@@ -78,6 +78,17 @@ $$ RMSPE=\sqrt{\frac{1}{n}\sum_{i=1}^n\left(\frac{y_i-y_\hat{i}}{y_i}\right)^2} 
 ![流程图](https://github.com/lidatou1991/udacity_final_rossmann/blob/master/fig/Untitled%20Diagram.png)
 
 
+### 项目总结及疑问
+
+撰写本开题报告的时候，已经基本对该项目有一次完整的探索了，虽然最后的结果还暂时没有达到要求。但是，希望在做本次提交的时候，提出以下问题，希望可以得到助教的解答，以便能够在规定期限内完成本纳米学位：
+
+1. 在这份[笔记本](https://github.com/lidatou1991/udacity_final_rossmann/blob/master/%08Auto-Feature-MBP.ipynb)中，使用featuretool只是做了简单的特征工程，模型未做任何的调参，分数已经可以得到0.14，我是否应该在这个笔记本基础上继续优化，完成项目？
+
+2. 为了提高分数，我在上面笔记本的基础上，增加了很多“时间窗”特征，这些特征应该都是保险的、对模型预测结果有益的，但是非常诡异，得分居然只有1.2！希望助教能够看一下这份[笔记本]（https://github.com/lidatou1991/udacity_final_rossmann/blob/master/GCP/XG-TPOT-GCP-2h-test.ipynb）
+
+3. 在第二步的基础上，最初是怀疑特征工程中，增加单一商店的（weekday，avgsales）特征有误，后面发现并不是。我对 TPOT 输出的模型产生了怀疑，因为我修改 TPOT 数据的模型中的一些参数后，在相同特征上的测试分数，提高一倍。
+
+希望助教指出问题在哪。第一次使用 github，所以 repo 比较乱，请见谅。 
 -----------
 
 **Before submitting your proposal, ask yourself. . .**
