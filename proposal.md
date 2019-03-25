@@ -89,7 +89,10 @@ $$ RMSPE=\sqrt{\frac{1}{n}\sum_{i=1}^n\left(\frac{y_i-y_\hat{i}}{y_i}\right)^2} 
 
 3. 在第二步的基础上，最初是怀疑特征工程中，增加单一商店的（weekday，avgsales）特征有误，后面发现并不是。我对 TPOT 输出的模型产生了怀疑，因为我修改 TPOT 数据的模型中的一些参数后，在相同特征上的测试分数，提高一倍。
 
-训练一次，debug 的带时间确实很长。所以希望助教指出问题在哪。第一次使用 github，所以 repo 比较乱，请见谅。 
+### 数据量较大，因而训练一次，debug 的等待时间确实很长。所以希望助教指出问题在哪。
+
+第一次使用 github，所以 repo 比较乱，请见谅。 
+
 -----------
 
 **Before submitting your proposal, ask yourself. . .**
