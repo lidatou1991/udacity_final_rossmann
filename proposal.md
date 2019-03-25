@@ -84,11 +84,12 @@ $$ RMSPE=\sqrt{\frac{1}{n}\sum_{i=1}^n\left(\frac{y_i-y_\hat{i}}{y_i}\right)^2} 
 
 1. 在这份[笔记本](https://github.com/lidatou1991/udacity_final_rossmann/blob/master/%08Auto-Feature-MBP.ipynb)中，使用featuretool只是做了简单的特征工程，模型未做任何的调参，分数已经可以得到0.14，我是否应该在这个笔记本基础上继续优化，完成项目？
 
-2. 为了提高分数，我在上面笔记本的基础上，增加了很多“时间窗”特征，这些特征应该都是保险的、对模型预测结果有益的，但是非常诡异，得分居然只有1.2！希望助教能够看一下这份[笔记本]（https://github.com/lidatou1991/udacity_final_rossmann/blob/master/GCP/XG-TPOT-GCP-2h-test.ipynb）
+2. 为了提高分数，我在上面笔记本的基础上，增加了很多“时间窗”特征，这些特征应该都是保险的、对模型预测结果有益的，但是非常诡异，得分居然只有1.2！在adaboost 模型上，不做任何优化的得分都有0.16的，所以肯定有很明显的错误。
+希望助教能够看一下这份 [笔记本](https://github.com/lidatou1991/udacity_final_rossmann/blob/master/GCP/XG-TPOT-GCP-2h-test.ipynb)，其他的 gradient descent regressor 的参数，来自[笔记本](https://github.com/lidatou1991/udacity_final_rossmann/blob/master/Rossmann-Auto-ML-TPOT-Full.ipynb),由于计算资源问题，TPOT 只运行了2小时，所以我怀疑是不是 gradient descent regressor 没有输出最优化的参数（如果特征工程没有错误的话，肯定问题就在这里了）
 
 3. 在第二步的基础上，最初是怀疑特征工程中，增加单一商店的（weekday，avgsales）特征有误，后面发现并不是。我对 TPOT 输出的模型产生了怀疑，因为我修改 TPOT 数据的模型中的一些参数后，在相同特征上的测试分数，提高一倍。
 
-希望助教指出问题在哪。第一次使用 github，所以 repo 比较乱，请见谅。 
+训练一次，debug 的带时间确实很长。所以希望助教指出问题在哪。第一次使用 github，所以 repo 比较乱，请见谅。 
 -----------
 
 **Before submitting your proposal, ask yourself. . .**
