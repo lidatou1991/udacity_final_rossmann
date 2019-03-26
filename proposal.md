@@ -36,7 +36,7 @@
 3. sample_submission.csv - 提交数据预测结果的正确格式样本，**其中的 Id 是为了比对结果方便，并不是特征**；
 4. store.csv - 门店的额外补充信息；
 
-> 训练集包含 1017209 行数据，测试集包含 41088 行数据。训练集的时间跨度为   ，一共   天；测试集的时间跨度为   ，一共   天。
+> 训练集包含 1017209 行数据，测试集包含 41088 行数据。训练集的时间跨度为 2013-01-01 至 2015-07-31，一共 941 天；测试集的时间跨度为 2015-08-01 至 2015-09-17，一共 47 天。
 
 为了完成项目，需要运用 train.csv 和 store.csv 所提供的信息来对模型进行训练，test.csv 是测试集文件，在预测模型训练完成后，我们需要对 test.csv 中的样本进行预测，并将预测结果依照 sample_submission.csv 中的格式进行整理。最终的结果评价交到 Kaggle, 系统自动进行评分。train.csv 以及store.csv 数据集中提供的补充信息的数据域含义如下：
 
@@ -57,6 +57,8 @@
 - PromoInterval - 周期性推出促销活动的月份，例如 "Feb,May,Aug,Nov" 表示该门店在每年的 2 月 5 月 8 月和 11 月会周期性的推出促销活动。
 
 >训练集中，销售额的分布如下图所示。可以看到包含了很多 open =1，但是 sales =0 的数据，认为这些数据是异常值，在训练集中予以剔除。
+
+
 ![训练集销售额/顾客分布](https://github.com/lidatou1991/udacity_final_rossmann/blob/master/fig/train-hist.png）
 
 >训练集中，一共剔除了 条销售额为 0 的数据。对于其他异常值，按照以下方式处理：
@@ -66,6 +68,7 @@
 
 >异常值与空缺值处理后，训练集的销售额的分布如下图所示：
 
+![去除销量为零数据后的分布](https://github.com/lidatou1991/udacity_final_rossmann/blob/master/fig/sales-dist.png)
 
 
 
@@ -121,11 +124,11 @@ $$ RMSPE=\sqrt{\frac{1}{n}\sum_{i=1}^n\left(\frac{y_i-y_\hat{i}}{y_i}\right)^2} 
 3. 在第二步的基础上，最初是怀疑特征工程中，增加单一商店的（weekday，avgsales）特征有误，后面发现并不是。我对 TPOT 输出的模型产生了怀疑，因为我修改 TPOT 数据的模型中的一些参数后，在相同特征上的测试分数，提高一倍。
 
 ### 参考资料
-1. [^1]:https://www.kaggle.com/c/rossmann-store-sales/discussion/17896#101318
-2. [^2]:https://colab.research.google.com/drive/1CIVn-GoOyY3H2_Bv8z09mkNRokQ9jlJ-
-3. [^3]:http://imagine4077.github.io/Hogwarts/machine_learning/2016/05/13/TIME_SERIES_FORECASTING_-_TAKING_KAGGLE_ROSSMANN_CHALLENGE_AS_EXAMPLE.html
-4. [^4]:https://medium.com/@chunduri11/deep-learning-part-1-fast-ai-rossman-notebook-7787bfbc309f
-5.[^5]:https://willk.online/machine%20learning/data%20science%20for%20good/project/a-data-science-for-good-machine-learning-project-walk-through-in-python-part-one/
+1. https://www.kaggle.com/c/rossmann-store-sales/discussion/17896#101318
+2. https://colab.research.google.com/drive/1CIVn-GoOyY3H2_Bv8z09mkNRokQ9jlJ-
+3. http://imagine4077.github.io/Hogwarts/machine_learning/2016/05/13/TIME_SERIES_FORECASTING_-_TAKING_KAGGLE_ROSSMANN_CHALLENGE_AS_EXAMPLE.html
+4. https://medium.com/@chunduri11/deep-learning-part-1-fast-ai-rossman-notebook-7787bfbc309f
+5. https://willk.online/machine%20learning/data%20science%20for%20good/project/a-data-science-for-good-machine-learning-project-walk-through-in-python-part-one/
 
 ### 数据量较大，因而训练一次，debug 的等待时间确实很长。所以希望助教指出问题在哪。
 
