@@ -56,8 +56,7 @@
 - Promo2Since[Year/Week] - 以年和年中周数表征该门店参与持续促销的时间。
 - PromoInterval - 周期性推出促销活动的月份，例如 "Feb,May,Aug,Nov" 表示该门店在每年的 2 月 5 月 8 月和 11 月会周期性的推出促销活动。
 
->训练集中，销售额的分布如下图所示。可以看到包含了很多 open =1，但是 sales =0 的数据，认为这些数据是异常值，在训练集中予以剔除。
-
+**训练集中，销售额的分布如下图所示。可以看到包含了很多 open =1，但是 sales =0 的数据，认为这些数据是异常值，在训练集中予以剔除。**
 
 ![训练集销售额/顾客分布](https://github.com/lidatou1991/udacity_final_rossmann/blob/master/fig/train-hist.png）
 
