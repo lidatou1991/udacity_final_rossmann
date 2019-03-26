@@ -104,9 +104,9 @@ $$ RMSPE=\sqrt{\frac{1}{n}\sum_{i=1}^n\left(\frac{y_i-y_\hat{i}}{y_i}\right)^2} 
 
 ![流程图](https://github.com/lidatou1991/udacity_final_rossmann/blob/master/fig/Untitled%20Diagram.png)
 
-1. 对于数据集划分方式，由于本问题明显是时间序列问题，因此准备参考[^3]采用日期时间顺序;
+1. 对于数据集划分方式，由于本问题明显是时间序列问题，因此准备参考[^3]采用日期时间顺序[^4];
 2. 因为 xgboost 框架在 Kaggle 比赛中表现非常优异，因而准备尝试 xgboost 框架。其实之前在尝试中使用 TPOT 就发现，gradient descent boost 计算量非常大，TPOT 模型优化需要非常多的时间，很有可能在 max_min 时间内并不能找到最优化的模型。因此，这里准备直接使用 xgboost 而不是计算速度更慢的 gradient descent boost. 网上查阅资料后发现，lightgbm 的计算速度更快，因此，也希望能够在本项目中进行尝试；
-3. 因为在 TPOT 模型的尝试中，已经意识到特征工程的重要性，并且在撰写本开题报告的时候，已经做了足够多的特征工程。因此，在截止期前，希望更多的精力放在模型调参上面。毕竟，之前也没有使用过 xgbm，对相关参数都还比较陌生。
+3. 因为在 TPOT 模型的尝试中，已经意识到特征工程的重要性，并且在撰写本开题报告的时候，已经做了足够多的特征工程。因此，在截止期前，希望更多的精力放在模型调参上面。毕竟，之前也没有使用过 xgbm，对相关参数都还比较陌生[^5]。
 4. 特征工程中，添加了很多 feature，但是现在并不知道是不是添加的 feature 都对模型表现有重要作用。因此，研究 feature importance 十分必要。删除掉部分不重要的 feature，很有可能还会提高模型的计算速度以及得分表现。
 
 ### 项目总结及疑问
@@ -121,9 +121,11 @@ $$ RMSPE=\sqrt{\frac{1}{n}\sum_{i=1}^n\left(\frac{y_i-y_\hat{i}}{y_i}\right)^2} 
 3. 在第二步的基础上，最初是怀疑特征工程中，增加单一商店的（weekday，avgsales）特征有误，后面发现并不是。我对 TPOT 输出的模型产生了怀疑，因为我修改 TPOT 数据的模型中的一些参数后，在相同特征上的测试分数，提高一倍。
 
 ### 参考资料
-[^1]:https://www.kaggle.com/c/rossmann-store-sales/discussion/17896#101318
-[^2]:https://colab.research.google.com/drive/1CIVn-GoOyY3H2_Bv8z09mkNRokQ9jlJ-
-[^3]:http://imagine4077.github.io/Hogwarts/machine_learning/2016/05/13/TIME_SERIES_FORECASTING_-_TAKING_KAGGLE_ROSSMANN_CHALLENGE_AS_EXAMPLE.html
+1. [^1]:https://www.kaggle.com/c/rossmann-store-sales/discussion/17896#101318
+2. [^2]:https://colab.research.google.com/drive/1CIVn-GoOyY3H2_Bv8z09mkNRokQ9jlJ-
+3. [^3]:http://imagine4077.github.io/Hogwarts/machine_learning/2016/05/13/TIME_SERIES_FORECASTING_-_TAKING_KAGGLE_ROSSMANN_CHALLENGE_AS_EXAMPLE.html
+4. [^4]:https://medium.com/@chunduri11/deep-learning-part-1-fast-ai-rossman-notebook-7787bfbc309f
+5.[^5]:https://willk.online/machine%20learning/data%20science%20for%20good/project/a-data-science-for-good-machine-learning-project-walk-through-in-python-part-one/
 
 ### 数据量较大，因而训练一次，debug 的等待时间确实很长。所以希望助教指出问题在哪。
 
