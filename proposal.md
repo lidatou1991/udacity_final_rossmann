@@ -22,6 +22,13 @@
 - **模型选择（Model Selection）**： 在完成最重要的特征工程后，相当于准备好了喂给机器学习模型的料。我们需要选择一个合适的模型，具体到本问题中就是利用提取到的特征建立回归模型。选择好模型后，我们就需要训练该模型，其目标是在测试集上能够有良好的表现。
 - **模型调参（Model Tunning)**:训练好模型后，我们可以在 validation set 上验证模型的表现。然后，通过调整选择模型的参数，提高在 validation set 上的表现。同时，还可以根据模型结果的 feature importance 等，对特征工程中的特征依据对模型表现的重要性，进行选择。最终期望达成的结果是，训练好的模型在 test set 上，也就是根据门店的相关信息（比如促销，竞争对手，位置等）和预测日当天以及前后一段时期的节假日等信息，能相对准确地对预测日的销售额进行预测。
 ### 数据集与输入
+>在开题报告阶段充分理解你的数据是非常必要的，包括以下几个方面：
+
+>1. 对于数据表项目进行具体的介绍；
+>2. 对于缺省值以及异常值的分析；
+>3. 对于数据集的一个整体的介绍，例如训练集、测试集大小，时间跨度等等；
+>4. 对于你的预测标签进行一个简单的分析，例如可视化标签的分布；
+
 本项目所有数据均可以在 [Kaggle 比赛](https://www.kaggle.com/c/rossmann-store-sales/data)数据介绍页面下载，其中也对数据含义做了介绍。在本项目中，我们可以拿到以csv格式呈现的四张数据表单，它们分别是：
 
 1. train.csv - 包含具体销售额的历史数据训练集；
@@ -37,68 +44,4 @@
 - Sales - 销售额（本项目的预测内容）。
 - Customers - 日客流量。
 - Open - 用来表征商店开张或闭店的数据，0 表示闭店，1 表示开张。
-- StateHoliday - 用来表征法定假期。除了少数例外，通常所有门店都会在节假日关闭。值得注意的是，所有学校在法定假期以及周末都会关闭。数据 a 表示公共假期，b 表示复活节，c 表示圣诞节，0 则意味着不是假期。
-- SchoolHoliday - 用来表征当前样本是否被学校的关闭所影响，也可以理解为学校放假。
-- StoreType - 使用 a,b,c,d 四个值来表征四种不同类型的商店
-- Assortment - 表征所售商品品类的等级，a 为基础型，b 为大型，c 为特大型。
-- CompetitionDistance - 距离最近竞争商家的距离（m）。
-- CompetitionOpenSince[Month/Year] - 距离最近竞争商家的开业时间。
-- Promo - 表征某天是否有促销活动。
-- Promo2 - 表征门店是否在持续推出促销活动
-- Promo2Since[Year/Week] - 以年和年中周数表征该门店参与持续促销的时间。
-- PromoInterval - 周期性推出促销活动的月份，例如 "Feb,May,Aug,Nov" 表示该门店在每年的 2 月 5 月 8 月和 11 月会周期性的推出促销活动。
-
-### 方案称述
-
-作为机器学习工程师纳米学位的毕业项目，本项目中，我不仅希望对所学知识进行回归，选择到解决方案以期达到项目要求。同时，还希望能够尽量吸收新知识，
-对 Udacity 视频材料中没有提到的方法、工具可行探索。具体到解决本项目的解决方案，主要包括以下几点：
-
-1. 特征工程中，学习使用 featuretools 库。featuretools 是一个开源的机器学习特征提取、构造库，能够发掘出许多深度的数据特征。尤其是，当机器学习工程师，对所解决的问题领域不熟悉的时候，很难深度发掘训练数据的特征，featuretools 就大有用武之地。本项目中，使用该工具是为了探索是否能够让特征工程的流程自动化，以及能否有效提高本项目的得分；
-
-2. 模型选择中，学习使用 TPOT 自动化 pipeline 过程。 TPOT 是一种基于遗传算法的机器学习模型选择、调参自动化工具，在此方案中选择此方法的目的是，优化模型选择以及调参过程。
-
-此外，本项目解决方案中的方法与其余大多数 Kaggle 参赛者相同。在最初的时候，使用了决策树（因为训练数据中有许多 categorical feature，自觉决策树应该效果不错）来尝试性打通项目的 pipeline，然后又尝试了在 adaboost 模型上的表现。最后，采用了在众多 Kaggle 优胜案例中使用的 xgboost.
-
-### 基准模型
-
-为了检验选择模型的表现，也就是在测试集上，预测模型是否达标，应当建立一个基准模型，通过是否满足基准指标来判断我有没有完成一个较为合理的预测。本项目中，预测值得正确结果类似于一个“黑箱”，也就是所有参赛队员都不知道最终的正确结果。在提交个人结果后，系统对自动比对与正确值的偏差，然后返回得分。很方便的是，本项目在 Kaggle 上的竞赛已经完成，Kaggle 通过测试集 RMPSE （Root Mean Percent Square Error) 的大小对参赛个人和团队进行了排名（Rossmann Store Sales Leaderboard）。从排名表中，我们可以看到，共有 3303 名参赛队伍进行了预测，第一名的得分为 0.10021（越低越好。根据 udacity 的要求，我将以 leaderboard 的 top 10% 作为基准，也就是对于测试集的评分达到 0.11773。
-
-
-### 评价指标
-
-在机器学习问题中，学习模型算法的选择以及算法参数的调试对结果的影响是极大的，但这并不意味着我们只需要完成算法相关的工作。在研究中，我们会选择数据集整体的一部分作为训练集 (training set)，另一部分作为测试集 (validation set)。我们在训练集上应用我们的算法训练我们选择的模型，而测试集则作为”期末考试”来对研究成果进行测试和评价。那么算法运行到什么程度以及我们最终结果是否理想都需要一个量化指标来体现，这也就是评价指标。不同的机器学习任务有着不同的性能评价指标。例如，在垃圾邮件检测系统中，它本身是一个二分类问题（垃圾邮件 vs 正常邮件），可以使用准确率 (Accuracy)。本项目实质上是一个时间序列数据预测问题，由于误差判断过程中使用的是百分比，因此相对与更加常用的 RMSE，RMSPE 对于数值的绝对大小不敏感，更加适合于多尺度规模的序列评测，也就是本项目的任务。
-
-在本项目中，我们使用 RMSPE 也就是 Root Mean Square Percentage Error 作为模型的评价指标。RMSPE 的计算方式如下： 
-$$ RMSPE=\sqrt{\frac{1}{n}\sum_{i=1}^n\left(\frac{y_i-y_\hat{i}}{y_i}\right)^2} $$
-
-### 项目流程设计
-
-本项目流程图如下所示，其中最关键的步骤就是特征工程以及根据模型测试结果，调整特征工程中选择的特征以及调整选择的模型及参数。这两部分的精力应该分别至少花到50%及40%。但是，遗憾的是，由于最初的重心放错以及代码工程能力的不足，有非常多的时间花费在了 pipeline 打通这些本不应该花费太多时间的事情上。
-
-![流程图](https://github.com/lidatou1991/udacity_final_rossmann/blob/master/fig/Untitled%20Diagram.png)
-
-
-### 项目总结及疑问
-
-撰写本开题报告的时候，已经基本对该项目有一次完整的探索了，虽然最后的结果还暂时没有达到要求。但是，希望在做本次提交的时候，提出以下问题，希望可以得到助教的解答，以便能够在规定期限内完成本纳米学位：
-
-1. 在这份[笔记本](https://github.com/lidatou1991/udacity_final_rossmann/blob/master/%08Auto-Feature-MBP.ipynb)中，使用featuretool只是做了简单的特征工程，模型未做任何的调参，分数已经可以得到0.14，我是否应该在这个笔记本基础上继续优化，完成项目？
-
-2. 为了提高分数，我在上面笔记本的基础上，增加了很多“时间窗”特征，这些特征应该都是保险的、对模型预测结果有益的，但是非常诡异，得分居然只有1.2！在adaboost 模型上，不做任何优化的得分都有0.16的，所以肯定有很明显的错误。
-希望助教能够看一下这份 [笔记本](https://github.com/lidatou1991/udacity_final_rossmann/blob/master/GCP/XG-TPOT-GCP-2h-test.ipynb)，其他的 gradient descent regressor 的参数，来自[笔记本](https://github.com/lidatou1991/udacity_final_rossmann/blob/master/Rossmann-Auto-ML-TPOT-Full.ipynb),由于计算资源问题，TPOT 只运行了2小时，所以我怀疑是不是 gradient descent regressor 没有输出最优化的参数（如果特征工程没有错误的话，肯定问题就在这里了）
-
-3. 在第二步的基础上，最初是怀疑特征工程中，增加单一商店的（weekday，avgsales）特征有误，后面发现并不是。我对 TPOT 输出的模型产生了怀疑，因为我修改 TPOT 数据的模型中的一些参数后，在相同特征上的测试分数，提高一倍。
-
-### 数据量较大，因而训练一次，debug 的等待时间确实很长。所以希望助教指出问题在哪。
-
-第一次使用 github，所以 repo 比较乱，请见谅。 
-
------------
-
-**Before submitting your proposal, ask yourself. . .**
-
-- Does the proposal you have written follow a well-organized structure similar to that of the project template?
-- Is each section (particularly **Solution Statement** and **Project Design**) written in a clear, concise and specific fashion? Are there any ambiguous terms or phrases that need clarification?
-- Would the intended audience of your project be able to understand your proposal?
-- Have you properly proofread your proposal to assure there are minimal grammatical and spelling mistakes?
-- Are all the resources used for this project correctly cited and referenced?
+- StateHoliday - 用来表征
