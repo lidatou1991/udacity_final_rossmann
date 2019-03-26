@@ -18,7 +18,7 @@
 
 - **数据探索性分析（Exploratory Data Analysis）**：通过对数据进行探索性分析，得到对问题提供的历史数据的第一印象。在此过程中可以解数据的一些基本情况，像数据的分布情况、缺失情况等，为后面的数据预处理（Data Preprocessing）以及特征工程（Feature - Engineering）做准备准备和提供一些参考；
 - **数据预处理（Data Preprocessing）**: 此过程是在数据探索性分析的基础上，来对数据进行清洗，以便提取特征以及训练模型。具体来讲，就是需要在此步骤中来处理异常值、缺失值，以及诸如类别信息、时间序列信息等非数值信息等，便于后续的特征提取；
-- **通过特征工程（Feature Engineering）**：因为在写开题报告的时候，已经对问题进行了基本完整的尝试，并且已经在 Kaggle 上提交过测试数据，得到了0.128的分数。因此，回头看来，个人认为此步骤是一个机器学习问题中最为关键的一步（虽然有争议，有部分观点认为模型选择以及调整参数才是最关键），并且这一观点在阅读 Kaggle 优胜者的 discussion 后也得到了证实，因为基本上每位排名靠前的选手，都在已有 feature 基础上，构造出了非常多的新的特征，这直接决定了排名先后。因为，在最初的尝试中，只局限于训练数据本身带有的 feature，没有对这些feature 进行 aggregation 以及 transformation 等深度挖掘，而是把重心放在了模型选择以及模型调整参数上。实践证明，得到的结果并不是最好，还有很大的改进空间。后来发现，模型选择甚至于模型调参，都已经准备（半）自动化的基础了，很大部分的精力都可以省下来。而自动化工具不能（或者不能完全）代替的这一部分，恰恰就是特征工程，这也是数据科学家的价值所在。虽然 featuretools 等工具也可以完成部分特征工程自动化，但是本项目中也会测试探讨，这些现阶段企图在特征工程部分完成自动化的工具，效果并不是太好，至少针对本项目而言是的（因为训练数据并不是非常复杂的多 table 数据，只是简单的 train 与 store 两个 table）；
+- **通过特征工程（Feature Engineering）**：因为在写开题报告的时候，已经对问题进行了基本完整的尝试，并且已经在 Kaggle 上提交过测试数据，得到了0.128的分数。因此，回头看来，个人认为此步骤是一个机器学习问题中最为关键的一步（虽然有争议，有部分观点认为模型选择以及调整参数才是最关键），并且这一观点在阅读 Kaggle 优胜者的 discussion 后也得到了证实，因为基本上每位排名靠前的选手，都在已有 feature 基础上，构造出了非常多的新的特征，这直接决定了排名先后[^1]。因为，在最初的尝试中，只局限于训练数据本身带有的 feature，没有对这些feature 进行 aggregation 以及 transformation 等深度挖掘，而是把重心放在了模型选择以及模型调整参数上。实践证明，得到的结果并不是最好，还有很大的改进空间。后来发现，模型选择甚至于模型调参，都已经准备（半）自动化的基础了，很大部分的精力都可以省下来。而自动化工具不能（或者不能完全）代替的这一部分，恰恰就是特征工程，这也是数据科学家的价值所在[^2]。虽然 featuretools 等工具也可以完成部分特征工程自动化，但是本项目中也会测试探讨，这些现阶段企图在特征工程部分完成自动化的工具，效果并不是太好，至少针对本项目而言是的（因为训练数据并不是非常复杂的多 table 数据，只是简单的 train 与 store 两个 table）；
 - **模型选择（Model Selection）**： 在完成最重要的特征工程后，相当于准备好了喂给机器学习模型的料。我们需要选择一个合适的模型，具体到本问题中就是利用提取到的特征建立回归模型。选择好模型后，我们就需要训练该模型，其目标是在测试集上能够有良好的表现。
 - **模型调参（Model Tunning)**:训练好模型后，我们可以在 validation set 上验证模型的表现。然后，通过调整选择模型的参数，提高在 validation set 上的表现。同时，还可以根据模型结果的 feature importance 等，对特征工程中的特征依据对模型表现的重要性，进行选择。最终期望达成的结果是，训练好的模型在 test set 上，也就是根据门店的相关信息（比如促销，竞争对手，位置等）和预测日当天以及前后一段时期的节假日等信息，能相对准确地对预测日的销售额进行预测。
 ### 数据集与输入
@@ -32,10 +32,11 @@
 本项目所有数据均可以在 [Kaggle 比赛](https://www.kaggle.com/c/rossmann-store-sales/data)数据介绍页面下载，其中也对数据含义做了介绍。在本项目中，我们可以拿到以csv格式呈现的四张数据表单，它们分别是：
 
 1. train.csv - 包含具体销售额的历史数据训练集；
-2. test.csv - 不包含销售额的历史数据测试集；
-3. sample_submission.csv - 提交数据预测结果的正确格式样本；
+2. test.csv - 不包含销售额的历史数据测试集，**尤其还要注意不包含 Customers,因为顾客数量也无法事先预测**；
+3. sample_submission.csv - 提交数据预测结果的正确格式样本，**其中的 Id 是为了比对结果方便，并不是特征**；
 4. store.csv - 门店的额外补充信息；
 
+> 训练集包含 1017209 行数据，测试集包含 41088 行数据。训练集的时间跨度为   ，一共   天；测试集的时间跨度为   ，一共   天。
 
 为了完成项目，需要运用 train.csv 和 store.csv 所提供的信息来对模型进行训练，test.csv 是测试集文件，在预测模型训练完成后，我们需要对 test.csv 中的样本进行预测，并将预测结果依照 sample_submission.csv 中的格式进行整理。最终的结果评价交到 Kaggle, 系统自动进行评分。train.csv 以及store.csv 数据集中提供的补充信息的数据域含义如下：
 
@@ -54,6 +55,19 @@
 - Promo2 - 表征门店是否在持续推出促销活动
 - Promo2Since[Year/Week] - 以年和年中周数表征该门店参与持续促销的时间。
 - PromoInterval - 周期性推出促销活动的月份，例如 "Feb,May,Aug,Nov" 表示该门店在每年的 2 月 5 月 8 月和 11 月会周期性的推出促销活动。
+
+>训练集中，销售额的分布如下图所示。可以看到包含了很多 open =1，但是 sales =0 的数据，认为这些数据是异常值，在训练集中予以剔除。
+![训练集销售额/顾客分布](https://github.com/lidatou1991/udacity_final_rossmann/blob/master/fig/train-hist.png）
+
+>训练集中，一共剔除了 条销售额为 0 的数据。对于其他异常值，按照以下方式处理：
+>1. StateHoliday 中的数字 0 与字符’0‘，全部更改为字符'0’；
+>2. store.csv 中的 NaN 全部填充为0，表示不存在竞争者，当然 CompetitionDisdance 等相关 feature 也为 0；
+>3. test.csv 中的 NaN 全部集中在 Open 字段，因而全部填充为 1，不然不开门的商店没有预测的意义。
+
+>异常值与空缺值处理后，训练集的销售额的分布如下图所示：
+
+
+
 
 ### 方案称述
 
@@ -90,6 +104,10 @@ $$ RMSPE=\sqrt{\frac{1}{n}\sum_{i=1}^n\left(\frac{y_i-y_\hat{i}}{y_i}\right)^2} 
 
 ![流程图](https://github.com/lidatou1991/udacity_final_rossmann/blob/master/fig/Untitled%20Diagram.png)
 
+1. 对于数据集划分方式，由于本问题明显是时间序列问题，因此准备参考[^3]采用日期时间顺序;
+2. 因为 xgboost 框架在 Kaggle 比赛中表现非常优异，因而准备尝试 xgboost 框架。其实之前在尝试中使用 TPOT 就发现，gradient descent boost 计算量非常大，TPOT 模型优化需要非常多的时间，很有可能在 max_min 时间内并不能找到最优化的模型。因此，这里准备直接使用 xgboost 而不是计算速度更慢的 gradient descent boost. 网上查阅资料后发现，lightgbm 的计算速度更快，因此，也希望能够在本项目中进行尝试；
+3. 因为在 TPOT 模型的尝试中，已经意识到特征工程的重要性，并且在撰写本开题报告的时候，已经做了足够多的特征工程。因此，在截止期前，希望更多的精力放在模型调参上面。毕竟，之前也没有使用过 xgbm，对相关参数都还比较陌生。
+4. 特征工程中，添加了很多 feature，但是现在并不知道是不是添加的 feature 都对模型表现有重要作用。因此，研究 feature importance 十分必要。删除掉部分不重要的 feature，很有可能还会提高模型的计算速度以及得分表现。
 
 ### 项目总结及疑问
 
@@ -101,6 +119,11 @@ $$ RMSPE=\sqrt{\frac{1}{n}\sum_{i=1}^n\left(\frac{y_i-y_\hat{i}}{y_i}\right)^2} 
 希望助教能够看一下这份 [笔记本](https://github.com/lidatou1991/udacity_final_rossmann/blob/master/GCP/XG-TPOT-GCP-2h-test.ipynb)，其他的 gradient descent regressor 的参数，来自[笔记本](https://github.com/lidatou1991/udacity_final_rossmann/blob/master/Rossmann-Auto-ML-TPOT-Full.ipynb),由于计算资源问题，TPOT 只运行了2小时，所以我怀疑是不是 gradient descent regressor 没有输出最优化的参数（如果特征工程没有错误的话，肯定问题就在这里了）
 
 3. 在第二步的基础上，最初是怀疑特征工程中，增加单一商店的（weekday，avgsales）特征有误，后面发现并不是。我对 TPOT 输出的模型产生了怀疑，因为我修改 TPOT 数据的模型中的一些参数后，在相同特征上的测试分数，提高一倍。
+
+### 参考资料
+[^1]:https://www.kaggle.com/c/rossmann-store-sales/discussion/17896#101318
+[^2]:https://colab.research.google.com/drive/1CIVn-GoOyY3H2_Bv8z09mkNRokQ9jlJ-
+[^3]:http://imagine4077.github.io/Hogwarts/machine_learning/2016/05/13/TIME_SERIES_FORECASTING_-_TAKING_KAGGLE_ROSSMANN_CHALLENGE_AS_EXAMPLE.html
 
 ### 数据量较大，因而训练一次，debug 的等待时间确实很长。所以希望助教指出问题在哪。
 
