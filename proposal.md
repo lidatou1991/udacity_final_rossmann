@@ -32,9 +32,11 @@
 本项目所有数据均可以在 [Kaggle 比赛](https://www.kaggle.com/c/rossmann-store-sales/data)数据介绍页面下载，其中也对数据含义做了介绍。在本项目中，我们可以拿到以csv格式呈现的四张数据表单，它们分别是：
 
 1. train.csv - 包含具体销售额的历史数据训练集；
-2. test.csv - 不包含销售额的历史数据测试集，**尤其还要注意不包含 Customers,因为顾客数量也无法事先预测**；
+2. test.csv - 不包含销售额的历史数据测试集，**尤其要其不包含Customers,因为顾客数量也无法事先预测,虽然从下图中可以看到customer与sales高度相关**；
 3. sample_submission.csv - 提交数据预测结果的正确格式样本，**其中的 Id 是为了比对结果方便，并不是特征**；
 4. store.csv - 门店的额外补充信息；
+
+![customers 与 sales](https://github.com/lidatou1991/udacity_final_rossmann/blob/master/fig/customers.png)
 
 > 训练集包含 1017209 行数据，测试集包含 41088 行数据。训练集的时间跨度为 2013-01-01 至 2015-07-31，一共 941 天；测试集的时间跨度为 2015-08-01 至 2015-09-17，一共 47 天。
 
@@ -56,9 +58,9 @@
 - Promo2Since[Year/Week] - 以年和年中周数表征该门店参与持续促销的时间。
 - PromoInterval - 周期性推出促销活动的月份，例如 "Feb,May,Aug,Nov" 表示该门店在每年的 2 月 5 月 8 月和 11 月会周期性的推出促销活动。
 
-**训练集中，销售额的分布如下图所示。可以看到包含了很多 open =1，但是 sales =0 的数据，认为这些数据是异常值，在训练集中予以剔除。**
+>训练集中，销售额的分布如下图所示。可以看到包含了很多 open =1，但是 sales =0 的数据，认为这些数据是异常值，在训练集中予以剔除。**
 
-![训练集销售额/顾客分布](https://github.com/lidatou1991/udacity_final_rossmann/blob/master/fig/train-hist.png）
+![销售量/顾客分布](https://github.com/lidatou1991/udacity_final_rossmann/blob/master/fig/train-hist.png)
 
 >训练集中，一共剔除了 条销售额为 0 的数据。对于其他异常值，按照以下方式处理：
 >1. StateHoliday 中的数字 0 与字符’0‘，全部更改为字符'0’；
