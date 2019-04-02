@@ -36,7 +36,7 @@ graduation project for Udacity machine learning engineer nanodegree
 - 使用 featurestools + xgboost，但是没有保留date/month 等时间窗 features 的得分 **public score = 0.11937**,基本满足0.1175要求
 - 4月2日至今最高得分 **public score = 0.11888**，对应 notebook ：https://github.com/lidatou1991/udacity_final_rossmann/blob/master/%08Auto-Feature-MBP-xgboost-keep-date.ipynb
 
-![Kaggle]（https://github.com/lidatou1991/udacity_final_rossmann/blob/master/screenshots/best-score.png）
+![Kaggle](https://github.com/lidatou1991/udacity_final_rossmann/blob/master/screenshots/best-score.png)
 
 # 疑惑与问题
 
