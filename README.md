@@ -52,7 +52,7 @@ graduation project for Udacity machine learning engineer nanodegree
 
 >- 利用特征 CompetitionOpenSinceYear、CompetitionOpenSinceMonth 以及 新特征 Year、Month 构建新的特征 CompetitionOpen，表示最近竞争对手开业有 多少个月的时长。 利用特征 Promo2SinceYear、Promo2SinceWeek 以及新特征 Year、 WeekOfYear 构造新特征 PromoOpen，表示持续促销开始有多少个月的时长。
 
-在最后的 [notebook](https://github.com/lidatou1991/udacity_final_rossmann/blob/master/%08xgboost-af-final.ipynb） 中增加了这些 features，其实在[第一次提交](https://github.com/lidatou1991/udacity_final_rossmann/blob/master/xgbm-add-feature.ipynb)的时候就添加了这些features
+在最后的 [notebook](https://github.com/lidatou1991/udacity_final_rossmann/blob/master/%08xgboost-af-final.ipynb)中增加了这些 features，其实在[第一次提交](https://github.com/lidatou1991/udacity_final_rossmann/blob/master/xgbm-add-feature.ipynb)的时候就添加了这些features
 >- 模型的调参，尝试使用更小的学习率来学习，比如你可以设置 0.003 左右。
 
 在最后的 [notebook](https://github.com/lidatou1991/udacity_final_rossmann/blob/master/%08xgboost-af-final.ipynb) 也减小了 eta，分数确实有提高，但是训练时间也长了很多。
