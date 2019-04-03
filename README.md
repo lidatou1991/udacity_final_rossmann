@@ -38,6 +38,9 @@ graduation project for Udacity machine learning engineer nanodegree
 
 ![Kaggle](https://github.com/lidatou1991/udacity_final_rossmann/blob/master/screenshots/best-score.png)
 
+- 4月3日 private 最高得分 **private score = 0.12794**,对应的 [notebook](https://github.com/lidatou1991/udacity_final_rossmann/blob/master/%08Auto-Feature-MBP-xgboost.ipynb)
+![Kaggle](https://github.com/lidatou1991/udacity_final_rossmann/blob/master/screenshots/best-private.png)
+
 # 疑惑与问题
 
 - ~~没有保留时间窗 features 的模型，为什么比保留这些date features的表现反而好这么多~~
